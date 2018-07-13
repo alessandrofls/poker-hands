@@ -1,7 +1,7 @@
 package br.ufrpe.paradigmas.beans;
 
 public enum Cartas {
-	A, T, J, Q,K;
+	A, UM, DOIS, TRES, QUATRO, CINCO, SEIS, SETE, OITO, NOVE, T, J, Q,K;
 }
 
 //teste

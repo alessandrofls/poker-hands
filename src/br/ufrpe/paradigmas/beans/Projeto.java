@@ -10,18 +10,22 @@ import java.util.Set;
 public class Projeto{
 
 	public static void main(String args[]) {
+		long tempoInicio = System.currentTimeMillis();
+		
+		String linha;
+		int totalQuatroIguais= 0;
+		int totalDiferente = 0;
+		int totalSequencia = 0;
+		
 		try {
 
-			FileReader arq = new FileReader("C:\\Users\\Alessandro\\Desktop\\poker2M.txt");
+			FileReader arq = new FileReader("C:\\Users\\Alessandro\\eclipse-workspace\\poker-hands\\src\\br\\ufrpe\\paradigmas\\beans\\poker2k.txt");
 			BufferedReader lerArq = new BufferedReader(arq);
-
-			String linha;
-			int totalQuatroIguais= 0;
-			int totalDiferente = 0;
-			int totalSequencia = 0;
 
 			while ((linha = lerArq.readLine()) != null) {
 				linha = linha.replaceAll("\\s", "");
+				
+				System.out.println(linha.length());
 
 				totalQuatroIguais += iguais(linha);
 				totalSequencia += sequencia(linha);
@@ -35,6 +39,8 @@ public class Projeto{
 		}catch(IOException e) {
 			System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
 		}
+		
+		System.out.println("Tempo Total: "+(System.currentTimeMillis()-tempoInicio));
 
 	}
 	public static int iguais(String teste) {
@@ -42,7 +48,7 @@ public class Projeto{
 		int result = 0;
 		for(int i = 0; i < teste.length(); i++) {
 			for(int j = i+1; j < teste.length(); j++) {
-				if(teste.charAt(i) == teste.charAt(j)) {
+				if(teste.codePointAt(i) == teste.codePointAt(j)) {
 					count += 1;
 				}
 			}
@@ -60,7 +66,7 @@ public class Projeto{
 		int result = 0;
 		for(int i = 0; i < teste.length(); i++) {
 			for(int j = i+1; j < teste.length(); j++) {
-				if(teste.charAt(i) != teste.charAt(j)) {
+				if(teste.codePointAt(i) != teste.codePointAt(j) && !((teste.codePointAt(i) < teste.codePointAt(j)))) {
 					count += 1;
 				}
 			}
@@ -77,12 +83,12 @@ public class Projeto{
 		int result = 0;
 		for(int i = 0; i < teste.length(); i++) {
 			for(int j = i+1; j < teste.length(); j++) {
-				if(teste.charAt(i) < teste.charAt(j)) {
+				if(teste.codePointAt(i) < teste.codePointAt(j)) {
 					count += 1;
 				}
 			}
 		}
-			if(count == 5) {
+			if(count == 4) {
 				result = 1;
 			}
 

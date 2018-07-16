@@ -8,6 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Projeto{
 
@@ -16,7 +19,8 @@ public class Projeto{
 		principal("C:\\Users\\Alessandro\\Desktop\\poker2M.txt");
 		principal("C:\\Users\\Alessandro\\Desktop\\poker200M.txt");
 
-		
+
+
 	}
 
 	public static void principal(String path) {
@@ -36,7 +40,7 @@ public class Projeto{
 
 				totalQuatroIguais += iguais(linha);
 				totalSequencia += sequencia(linha);
-				totalDiferente += sequencia(linha);
+				totalDiferente += diferentes(linha);
 
 				linha = lerArq.readLine(); // lê da segunda até a última linha
 			}
@@ -44,42 +48,44 @@ public class Projeto{
 		}catch(IOException e) {
 			System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
 		}
-
+		System.out.println(totalDiferente +" "+ totalSequencia  +" "+ totalQuatroIguais);	
 		long tempo = System.currentTimeMillis()-tempoInicio;
-		
+
 		escreverNoArquivo(tempo, totalQuatroIguais, totalDiferente, totalSequencia);
 
 	}
 
 	public static int iguais(String teste) {
-		int count = 0;
 		int result = 0;
-		for(int i = 0; i < teste.length(); i++) {
-			for(int j = i+1; j < teste.length(); j++) {
-				if(teste.codePointAt(i) == teste.codePointAt(j)) {
-					count += 1;
-				}
+
+		Map<Character, Integer> maoAtual = new HashMap<Character, Integer>();
+		for (char c : teste.toCharArray()) {
+			maoAtual.put(c, maoAtual.containsKey(c) ? (maoAtual.get(c) + 1) : 1);
+			if(maoAtual.get(c) >= 4) {
+				result = 1;
+			}else {
+				result = 0;
 			}
-		}
-		if (count == 4) {
-			result = 1;
 		}
 
 		return result;
 	}
 
 	public static int diferentes(String teste) {
-		int count = 0;
 		int result = 0;
-		for(int i = 0; i < teste.length(); i++) {
-			for(int j = i+1; j < teste.length(); j++) {
-				if((teste.codePointAt(i) != teste.codePointAt(j)) && !((teste.codePointAt(i) < teste.codePointAt(j)))) {
-					count += 1;
-				}
-			}
+
+		Map<Character, Integer> maoAtual = new HashMap<Character, Integer>();
+		for (char c : teste.toCharArray()) {
+			maoAtual.put(c, maoAtual.containsKey(c) ? (maoAtual.get(c) + 1) : 1);
 		}
-		if (count == 4) {
-			result = 1;
+
+		for (int key : maoAtual.values()) {
+			if(key > 1) {
+				result = 0;
+				break;
+			}else {
+				result = 1;
+			}
 		}
 
 		return result;

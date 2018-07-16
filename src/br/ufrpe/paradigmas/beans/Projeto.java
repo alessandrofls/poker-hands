@@ -109,7 +109,7 @@ public class Projeto{
 			String content = tempo + " " + quatroIguais + " " + todasDiferentes + " " + sequencias;
 
 			// Cria arquivo
-			File file = new File("teste.txt");
+			File file = new File("saida.txt");
 
 			// Se o arquivo nao existir, ele gera
 			if (!file.exists()) {
@@ -117,7 +117,7 @@ public class Projeto{
 			}
 
 			// Prepara para escrever no arquivo
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter saida = new PrintWriter(bw);
 
